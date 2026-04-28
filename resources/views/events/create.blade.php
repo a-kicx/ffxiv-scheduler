@@ -3,20 +3,20 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto" x-data="eventCreateForm()">
-    <h1 class="text-2xl font-bold text-amber-400 mb-6">📅 新規イベント作成</h1>
+    <h1 class="text-2xl font-bold text-ff-gold mb-6">📅 新規イベント作成</h1>
 
     <form method="POST" action="{{ route('events.store') }}">
         @csrf
 
         {{-- イベント名 --}}
         <div class="card p-5 mb-4">
-            <h2 class="font-bold text-amber-300 mb-3">① イベント名</h2>
+            <h2 class="font-bold text-ff-gold mb-3">① イベント名</h2>
             <input type="text" name="name" class="form-input" placeholder="例：絶アレキサンダー討滅戦 固定メンバー募集" value="{{ old('name') }}" required>
         </div>
 
         {{-- パーティ構成 --}}
         <div class="card p-5 mb-4">
-            <h2 class="font-bold text-amber-300 mb-3">② パーティ構成</h2>
+            <h2 class="font-bold text-ff-gold mb-3">② パーティ構成</h2>
             <label class="block mb-1">パーティタイプ</label>
             <select name="party_type" class="form-select mb-4" x-model="partyType" @change="updateRoleConfig()">
                 @foreach($partyTypes as $type)
@@ -27,10 +27,10 @@
             </select>
 
             <div class="mt-3">
-                <label class="block mb-2 text-sm text-gray-400">ロール構成（変更可能）</label>
+                <label class="block mb-2 text-sm text-ff-muted">ロール構成（変更可能）</label>
                 <template x-for="(unit, idx) in roleConfig.units" :key="idx">
-                    <div class="flex flex-wrap gap-3 items-center mb-2 p-2 bg-gray-900 rounded">
-                        <span class="text-amber-300 text-sm font-bold w-28" x-text="unit.label"></span>
+                    <div class="flex flex-wrap gap-3 items-center mb-2 p-2 bg-ff-card rounded">
+                        <span class="text-ff-gold text-sm font-bold w-28" x-text="unit.label"></span>
                         <label class="flex items-center gap-1 text-sm">
                             <span class="job-pill role-tank">TK</span>
                             <input type="number" :name="`role_config[units][${idx}][tank]`" x-model.number="unit.tank" class="form-input w-14 text-center" min="0" max="8">
@@ -51,7 +51,7 @@
 
         {{-- ジョブ選択 --}}
         <div class="card p-5 mb-4">
-            <h2 class="font-bold text-amber-300 mb-3">③ ジョブ選択設定</h2>
+            <h2 class="font-bold text-ff-gold mb-3">③ ジョブ選択設定</h2>
             <label class="block mb-1">参加ジョブの選択方式</label>
             <select name="job_mode" class="form-select">
                 <option value="none" {{ old('job_mode','none') === 'none' ? 'selected':'' }}>指定なし（ジョブ選択なし）</option>
@@ -62,7 +62,7 @@
 
         {{-- サブジョブ (Alliance Special only) --}}
         <div class="card p-5 mb-4" x-show="partyType === 'alliance_special'" x-cloak>
-            <h2 class="font-bold text-amber-300 mb-3">④ サポートジョブ選択設定（クレセントアイルのみ）</h2>
+            <h2 class="font-bold text-ff-gold mb-3">④ サポートジョブ選択設定（クレセントアイルのみ）</h2>
             <label class="block mb-1">サブジョブの選択方式</label>
             <select name="sub_job_mode" class="form-select">
                 <option value="none" {{ old('sub_job_mode','none') === 'none' ? 'selected':'' }}>指定なし</option>
@@ -74,7 +74,7 @@
 
         {{-- 日程 --}}
         <div class="card p-5 mb-4">
-            <h2 class="font-bold text-amber-300 mb-3">⑤ 日程設定</h2>
+            <h2 class="font-bold text-ff-gold mb-3">⑤ 日程設定</h2>
             <div class="flex flex-wrap gap-4 mb-3">
                 <div>
                     <label class="block mb-1">開始日</label>
@@ -88,16 +88,16 @@
 
             <div x-data="timeSlotBuilder()">
                 <label class="flex items-center gap-2 cursor-pointer mb-3">
-                    <input type="checkbox" x-model="useTimes" class="w-4 h-4 accent-amber-400">
+                    <input type="checkbox" x-model="useTimes" class="w-4 h-4 accent-ff-gold">
                     <span class="text-sm">時刻も指定する</span>
                 </label>
 
                 <div x-show="useTimes" x-cloak>
                     <div class="flex flex-wrap gap-2 mb-2">
                         <template x-for="(t, i) in times" :key="i">
-                            <div class="flex items-center gap-1 bg-gray-800 rounded px-2 py-1">
+                            <div class="flex items-center gap-1 bg-ff-card rounded px-2 py-1">
                                 <input type="time" x-model="times[i]" :name="`times[${i}]`" class="form-input w-28 text-sm">
-                                <button type="button" @click="removeTime(i)" class="text-red-400 hover:text-red-300 text-lg leading-none">×</button>
+                                <button type="button" @click="removeTime(i)" class="text-ff-decline hover:text-ff-decline text-lg leading-none">×</button>
                             </div>
                         </template>
                     </div>
@@ -108,20 +108,20 @@
 
         {{-- 参加可否 --}}
         <div class="card p-5 mb-6">
-            <h2 class="font-bold text-amber-300 mb-3">⑥ 参加可否の形式</h2>
+            <h2 class="font-bold text-ff-gold mb-3">⑥ 参加可否の形式</h2>
             <div class="flex gap-4">
                 <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="attendance_mode" value="ternary" {{ old('attendance_mode','ternary') === 'ternary' ? 'checked':'' }} class="accent-amber-400">
-                    <span class="text-green-400 font-bold">○</span>
-                    <span class="text-yellow-400 font-bold">△</span>
-                    <span class="text-red-400 font-bold">×</span>
-                    <span class="text-sm text-gray-400">（3種類）</span>
+                    <input type="radio" name="attendance_mode" value="ternary" {{ old('attendance_mode','ternary') === 'ternary' ? 'checked':'' }} class="accent-ff-gold">
+                    <span class="text-ff-attend font-bold">○</span>
+                    <span class="text-ff-maybe font-bold">△</span>
+                    <span class="text-ff-decline font-bold">×</span>
+                    <span class="text-sm text-ff-muted">（3種類）</span>
                 </label>
                 <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="attendance_mode" value="binary" {{ old('attendance_mode') === 'binary' ? 'checked':'' }} class="accent-amber-400">
-                    <span class="text-green-400 font-bold">○</span>
-                    <span class="text-red-400 font-bold">×</span>
-                    <span class="text-sm text-gray-400">（2種類）</span>
+                    <input type="radio" name="attendance_mode" value="binary" {{ old('attendance_mode') === 'binary' ? 'checked':'' }} class="accent-ff-gold">
+                    <span class="text-ff-attend font-bold">○</span>
+                    <span class="text-ff-decline font-bold">×</span>
+                    <span class="text-sm text-ff-muted">（2種類）</span>
                 </label>
             </div>
         </div>

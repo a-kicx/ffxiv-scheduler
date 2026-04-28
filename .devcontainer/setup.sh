@@ -8,6 +8,10 @@ sudo apt-get install -y -qq php8.4-sqlite3 php8.4-xml php8.4-mbstring php8.4-cur
 # Composer install
 composer install --no-interaction --prefer-dist
 
+# Node.js 依存関係インストール & ビルド
+npm install
+npm run build
+
 # .env setup
 if [ ! -f .env ]; then
     cp .env.example .env

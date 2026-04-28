@@ -6,6 +6,27 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, ui-sans-serif, system-ui, sans-serif;
+
+    /* FF14 カラーパレット */
+    --color-ff-bg:      #0f1622;
+    --color-ff-card:    #1a2535;
+    --color-ff-border:  #2a3d5a;
+    --color-ff-gold:    #c8a14a;
+    --color-ff-gold-l:  #dbb85c;
+    --color-ff-text:    #e8e0d0;
+    --color-ff-muted:   #7a9ab5;
+    --color-ff-dim:     #4a6a85;
+
+    /* ロール */
+    --color-ff-tank:    #2e6ecd;
+    --color-ff-healer:  #1a8a5a;
+    --color-ff-melee:   #b83030;
+    --color-ff-pranged: #8c6520;
+    --color-ff-mranged: #7040a0;
+
+    /* 参加可否 */
+    --color-ff-attend:  #3fb950;
+    --color-ff-maybe:   #d4a020;
+    --color-ff-decline: #e84040;
 }

@@ -1,0 +1,166 @@
+@use 'variables' as *;
+
+// ロールカラーピル
+.job-pill {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin: 1px;
+    letter-spacing: 0.02em;
+
+    &.role-tank    { background: $color-tank;    color: #fff; }
+    &.role-healer  { background: $color-healer;  color: #fff; }
+    &.role-melee   { background: $color-melee;   color: #fff; }
+    &.role-pranged { background: $color-pranged; color: #fff; }
+    &.role-mranged { background: $color-mranged; color: #fff; }
+    &.role-support { background: $color-support; color: $color-support-text; }
+}
+
+// 参加可否バッジ
+.attend-circle   { color: $color-attend;  font-weight: 700; }
+.attend-triangle { color: $color-maybe;   font-weight: 700; }
+.attend-cross    { color: $color-decline; font-weight: 700; }
+
+// スケジュールグリッド
+.schedule-grid {
+    overflow-x: auto;
+
+    table {
+        border-collapse: collapse;
+        min-width: 100%;
+        font-size: 0.85rem;
+    }
+
+    th, td {
+        border: 1px solid $color-border;
+        padding: 6px 10px;
+        white-space: nowrap;
+    }
+
+    th {
+        background: rgba($color-bg, 0.7);
+        color: $color-text-muted;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    td { text-align: center; }
+
+    tbody tr {
+        &:nth-child(even) td { background: rgba($color-bg, 0.5); }
+        &:nth-child(odd)  td { background: rgba($color-card, 0.4); }
+
+        &:hover td { background: rgba($color-border, 0.3); }
+    }
+}
+
+.participant-name-link {
+    color: $color-gold;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+}
+
+.summary-bar {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+// 補足ツールチップ
+.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+
+    .tooltip-text {
+        visibility: hidden;
+        background: $color-card;
+        color: $color-text;
+        border: 1px solid $color-border;
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        position: absolute;
+        bottom: calc(100% + 4px);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+    }
+
+    &:hover .tooltip-text { visibility: visible; }
+}
+
+.note-icon {
+    cursor: help;
+    color: $color-text-muted;
+    font-size: 0.8rem;
+}
+
+// セクション見出し
+.section-title {
+    font-weight: 700;
+    color: $color-gold;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid $color-border;
+}
+
+// 管理者バッジ
+.admin-badge {
+    background: $color-gold-dark;
+    color: $color-text;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+}
+
+// URL コピー入力欄
+.url-copy-input {
+    background: rgba($color-bg, 0.8);
+    border: 1px solid $color-border;
+    color: $color-text-muted;
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    width: 100%;
+}
+
+// ジョブ選択ラベル
+.job-select-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid $color-border;
+    font-size: 0.875rem;
+    transition: border-color 0.15s, background 0.15s;
+
+    &:hover { border-color: $color-gold; }
+
+    &.is-selected {
+        border-color: $color-gold;
+        background: rgba($color-gold, 0.1);
+    }
+}
+
+.support-job-select-label {
+    @extend .job-select-label;
+
+    &:hover { border-color: $color-support-text; }
+
+    &.is-selected {
+        border-color: $color-support-text;
+        background: rgba($color-support, 0.3);
+    }
+}

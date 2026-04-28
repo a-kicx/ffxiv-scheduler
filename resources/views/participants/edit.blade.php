@@ -4,7 +4,7 @@
 @section('content')
 <div class="max-w-3xl mx-auto">
     <div class="mb-4">
-        <a href="{{ route('events.show', $event) }}" class="text-amber-400 text-sm hover:underline">← イベントに戻る</a>
+        <a href="{{ route('events.show', $event) }}" class="text-ff-gold text-sm hover:underline">← イベントに戻る</a>
     </div>
     <div class="card p-5">
         @include('participants._form', [

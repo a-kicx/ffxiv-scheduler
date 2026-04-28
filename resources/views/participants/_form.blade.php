@@ -7,7 +7,7 @@
     $isMultiSupportJob = $event->sub_job_mode->value === 'multiple';
 @endphp
 
-<h3 class="font-bold text-amber-300 mb-4">
+<h3 class="font-bold text-ff-gold mb-4">
     {{ $isEdit ? '✏ 回答を編集' : '＋ 参加登録' }}
 </h3>
 
@@ -19,7 +19,7 @@
 
     {{-- Name --}}
     <div class="mb-4">
-        <label class="block mb-1">名前 <span class="text-red-400">*</span></label>
+        <label class="block mb-1">名前 <span class="text-ff-decline">*</span></label>
         <input type="text" name="name" class="form-input max-w-sm"
                value="{{ old('name', $participant?->name ?? '') }}" required placeholder="キャラ名など">
     </div>
@@ -28,13 +28,13 @@
     @if($showJobs)
     <div class="mb-4">
         <label class="block mb-2">参加ジョブ
-            <span class="text-gray-500 text-xs ml-1">({{ $isMultiJob ? '複数選択可' : '1つ選択' }})</span>
+            <span class="text-ff-muted text-xs ml-1">({{ $isMultiJob ? '複数選択可' : '1つ選択' }})</span>
         </label>
         <div class="flex flex-wrap gap-1">
             @foreach(['tank' => 'タンク', 'healer' => 'ヒーラー', 'melee' => '近接DPS', 'pranged' => '遠隔物理DPS', 'mranged' => '遠隔魔法DPS'] as $role => $roleLabel)
                 @if(isset($jobsByRole[$role]) && count($jobsByRole[$role]) > 0)
                     <div class="mb-2 w-full">
-                        <span class="text-xs text-gray-500">{{ $roleLabel }}</span>
+                        <span class="text-xs text-ff-muted">{{ $roleLabel }}</span>
                         <div class="flex flex-wrap gap-1 mt-1">
                             @foreach($jobsByRole[$role] as $job)
                                 @php
@@ -42,8 +42,8 @@
                                     $inputName = $isMultiJob ? 'selected_jobs[]' : 'selected_jobs';
                                     $inputType = $isMultiJob ? 'checkbox' : 'radio';
                                 @endphp
-                                <label class="flex items-center gap-1 cursor-pointer px-2 py-1 rounded border border-gray-700 hover:border-amber-500 transition-colors text-sm"
-                                       :class="isJobSelected({{ $job->id }}) ? 'border-amber-500 bg-gray-800' : ''">
+                                <label class="flex items-center gap-1 cursor-pointer px-2 py-1 rounded border border-ff-border hover:border-ff-gold transition-colors text-sm"
+                                       :class="isJobSelected({{ $job->id }}) ? 'border-ff-gold bg-ff-card' : ''">
                                     <input type="{{ $inputType }}" name="{{ $inputName }}" value="{{ $job->id }}"
                                            x-model="{{ $isMultiJob ? 'selectedJobs' : 'selectedJob' }}"
                                            {{ $checked ? 'checked' : '' }} class="hidden">
@@ -63,7 +63,7 @@
     @if($showSupportJobs)
     <div class="mb-4">
         <label class="block mb-2">サポートジョブ
-            <span class="text-gray-500 text-xs ml-1">クレセントアイル ({{ $isMultiSupportJob ? '複数選択可' : '1つ選択' }})</span>
+            <span class="text-ff-muted text-xs ml-1">クレセントアイル ({{ $isMultiSupportJob ? '複数選択可' : '1つ選択' }})</span>
         </label>
         <div class="flex flex-wrap gap-1">
             @foreach($supportJobs as $job)
@@ -72,8 +72,8 @@
                     $inputName = $isMultiSupportJob ? 'selected_sub_jobs[]' : 'selected_sub_jobs';
                     $inputType = $isMultiSupportJob ? 'checkbox' : 'radio';
                 @endphp
-                <label class="flex items-center gap-1 cursor-pointer px-2 py-1 rounded border border-gray-700 hover:border-blue-400 transition-colors text-sm"
-                       :class="isSupportJobSelected({{ $job->id }}) ? 'border-blue-400 bg-gray-800' : ''">
+                <label class="flex items-center gap-1 cursor-pointer px-2 py-1 rounded border border-ff-border hover:border-blue-400 transition-colors text-sm"
+                       :class="isSupportJobSelected({{ $job->id }}) ? 'border-blue-400 bg-ff-card' : ''">
                     <input type="{{ $inputType }}" name="{{ $inputName }}" value="{{ $job->id }}"
                            x-model="{{ $isMultiSupportJob ? 'selectedSupportJobs' : 'selectedSupportJob' }}"
                            {{ $checked ? 'checked' : '' }} class="hidden">
@@ -86,16 +86,16 @@
 
     {{-- Attendance per slot --}}
     <div class="mb-4">
-        <label class="block mb-2">参加可否 <span class="text-red-400">*</span></label>
+        <label class="block mb-2">参加可否 <span class="text-ff-decline">*</span></label>
         <div class="overflow-x-auto">
             <table class="text-sm" style="border-collapse:collapse">
                 <thead>
                     <tr>
-                        <th class="px-3 py-2 text-left text-gray-500 font-normal">日程</th>
+                        <th class="px-3 py-2 text-left text-ff-muted font-normal">日程</th>
                         @foreach($attendanceOptions as $key => $opt)
                             <th class="px-4 py-2 {{ $opt['class'] }}">{{ $opt['label'] }}</th>
                         @endforeach
-                        <th class="px-3 py-2 text-gray-500 font-normal">補足</th>
+                        <th class="px-3 py-2 text-ff-muted font-normal">補足</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,21 +105,21 @@
                             $existingAttendance = old("attendance.{$slot->id}", $existing?->attendance ?? '');
                             $existingNote = old("notes.{$slot->id}", $existing?->note ?? '');
                         @endphp
-                        <tr class="border-t border-gray-800">
-                            <td class="px-3 py-2 text-amber-200 whitespace-nowrap">{{ $slot->label() }}</td>
+                        <tr class="border-t border-ff-border">
+                            <td class="px-3 py-2 text-ff-gold whitespace-nowrap">{{ $slot->label() }}</td>
                             @foreach($attendanceOptions as $key => $opt)
                                 <td class="px-4 py-2 text-center">
                                     <label class="cursor-pointer">
                                         <input type="radio" name="attendance[{{ $slot->id }}]"
                                                value="{{ $key }}"
                                                {{ $existingAttendance === $key ? 'checked' : '' }}
-                                               required class="accent-amber-400 w-4 h-4">
+                                               required class="accent-ff-gold w-4 h-4">
                                     </label>
                                 </td>
                             @endforeach
                             <td class="px-2 py-1" x-data="{ showNote: {{ $existingNote ? 'true' : 'false' }}, note: {{ json_encode($existingNote) }} }">
                                 <button type="button" @click="showNote = !showNote"
-                                        class="text-xs text-gray-500 hover:text-gray-300">
+                                        class="text-xs text-ff-muted hover:text-ff-muted">
                                     <span x-text="showNote ? '▲ 補足' : '＋ 補足'"></span>
                                 </button>
                                 <div x-show="showNote" x-cloak class="mt-1">

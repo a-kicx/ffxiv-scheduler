@@ -30,7 +30,7 @@
         <tbody>
             {{-- Summary row --}}
             <tr>
-                <td class="text-xs text-gray-500">集計</td>
+                <td class="text-xs text-ff-muted">集計</td>
                 @foreach($slots as $slot)
                     <td>
                         <div class="summary-bar">
@@ -81,11 +81,11 @@
                                 <span class="{{ $response->attendanceCssClass() }}">{{ $response->attendanceLabel() }}</span>
                             @endif
                         @else
-                            <span class="text-gray-600">-</span>
+                            <span class="text-ff-muted">-</span>
                         @endif
                     </td>
                 @endforeach
-                <td class="text-left text-xs text-gray-400 max-w-xs" style="min-width:120px; white-space:pre-wrap;">
+                <td class="text-left text-xs text-ff-muted max-w-xs" style="min-width:120px; white-space:pre-wrap;">
                     {{ $participant->remarks }}
                 </td>
             </tr>
