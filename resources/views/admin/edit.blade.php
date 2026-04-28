@@ -74,7 +74,7 @@
                 <option value="multiple" {{ old('sub_job_mode', $event->sub_job_mode->value) === 'multiple' ? 'selected':'' }}>複数選択</option>
             </select>
         </div>
-        <input type="hidden" name="sub_job_mode" value="none" x-show="partyType !== 'alliance_special'">
+        <input type="hidden" name="sub_job_mode" value="none" :disabled="partyType === 'alliance_special'">
 
         {{-- 日程 --}}
         <div class="card p-5 mb-4">

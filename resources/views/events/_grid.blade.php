@@ -85,13 +85,8 @@
                         @endif
                     </td>
                 @endforeach
-                <td class="text-left text-xs text-gray-400 max-w-xs">
-                    @if($participant->remarks)
-                        <div class="tooltip-wrapper">
-                            <span class="note-icon cursor-help">💬 備考あり</span>
-                            <span class="tooltip-text max-w-xs whitespace-normal" style="max-width:200px; white-space:normal;">{{ $participant->remarks }}</span>
-                        </div>
-                    @endif
+                <td class="text-left text-xs text-gray-400 max-w-xs" style="min-width:120px; white-space:pre-wrap;">
+                    {{ $participant->remarks }}
                 </td>
             </tr>
             @endforeach
