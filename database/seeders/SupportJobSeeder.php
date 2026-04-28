@@ -13,7 +13,7 @@ class SupportJobSeeder extends Seeder
             ['name' => 'すっぴん',   'name_en' => 'Freelancer',    'sort_order' => 1],
             ['name' => 'ナイト',     'name_en' => 'Knight',        'sort_order' => 2],
             ['name' => 'モンク',     'name_en' => 'Monk',          'sort_order' => 3],
-            ['name' => 'バード',     'name_en' => 'Bard',          'sort_order' => 4],
+            ['name' => '吟遊詩人',   'name_en' => 'Bard',          'sort_order' => 4],
             ['name' => 'シーフ',     'name_en' => 'Thief',         'sort_order' => 5],
             ['name' => '侍',         'name_en' => 'Samurai',       'sort_order' => 6],
             ['name' => 'バーサーカー','name_en' => 'Berserker',    'sort_order' => 7],
