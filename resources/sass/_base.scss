@@ -1,0 +1,125 @@
+@use 'variables' as *;
+
+// ベーススタイル
+body {
+    background-color: $color-bg;
+    color: $color-text;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    min-height: 100vh;
+}
+
+[x-cloak] { display: none !important; }
+
+// ヘッダー
+.site-header {
+    background: rgba($color-card, 0.95);
+    border-bottom: 1px solid $color-border;
+    backdrop-filter: blur(4px);
+
+    .site-logo {
+        color: $color-gold;
+        font-weight: 700;
+        font-size: 1.125rem;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+
+        &:hover { color: $color-gold-hover; }
+    }
+}
+
+// カード
+.card {
+    background: $color-card;
+    border: 1px solid $color-border;
+    border-radius: 8px;
+}
+
+// フォームコントロール
+.form-input,
+.form-select {
+    background: rgba($color-bg, 0.8);
+    border: 1px solid $color-border;
+    color: $color-text;
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    width: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s;
+
+    &:focus {
+        outline: none;
+        border-color: $color-gold;
+        box-shadow: 0 0 0 2px rgba($color-gold, 0.2);
+    }
+
+    &::placeholder { color: $color-text-dim; }
+}
+
+label {
+    font-size: 0.875rem;
+    color: $color-text-muted;
+}
+
+// ボタン
+.btn-primary {
+    background: $color-gold;
+    color: $color-bg;
+    font-weight: 700;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    transition: background 0.15s;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+
+    &:hover { background: $color-gold-hover; }
+}
+
+.btn-secondary {
+    background: $color-card;
+    color: $color-text;
+    border: 1px solid $color-border;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    transition: background 0.15s, border-color 0.15s;
+    display: inline-block;
+    cursor: pointer;
+
+    &:hover {
+        background: $color-card-hover;
+        border-color: $color-border-light;
+    }
+}
+
+.btn-danger {
+    background: #7a1515;
+    color: #fca5a5;
+    border: 1px solid #9a2020;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    transition: background 0.15s;
+    display: inline-block;
+    cursor: pointer;
+
+    &:hover { background: #9a1a1a; }
+}
+
+// フラッシュメッセージ
+.flash-success {
+    background: rgba($color-healer, 0.15);
+    border: 1px solid rgba($color-healer, 0.4);
+    color: #6ee7b7;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.flash-error {
+    background: rgba($color-decline, 0.12);
+    border: 1px solid rgba($color-decline, 0.35);
+    color: #fca5a5;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
