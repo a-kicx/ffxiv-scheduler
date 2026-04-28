@@ -67,7 +67,7 @@
 
         {{-- サブジョブ --}}
         <div class="card p-5 mb-4" x-show="partyType === 'alliance_special'" x-cloak>
-            <h2 class="font-bold text-amber-300 mb-3">④ サブジョブ選択設定</h2>
+            <h2 class="font-bold text-amber-300 mb-3">④ サポートジョブ選択設定（クレセントアイルのみ）</h2>
             <select name="sub_job_mode" class="form-select">
                 <option value="none" {{ old('sub_job_mode', $event->sub_job_mode->value) === 'none' ? 'selected':'' }}>指定なし</option>
                 <option value="single" {{ old('sub_job_mode', $event->sub_job_mode->value) === 'single' ? 'selected':'' }}>単一選択</option>

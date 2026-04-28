@@ -15,7 +15,7 @@ enum PartyType: string
             self::Light => 'ライトパーティ（4人）',
             self::Full => 'フルパーティ（8人）',
             self::Alliance => 'アライアンスパーティ（8人×3）',
-            self::AllianceSpecial => 'アライアンス特殊パーティ（8人×6）',
+            self::AllianceSpecial => 'クレセントアイル（8人×6）',
         };
     }
 

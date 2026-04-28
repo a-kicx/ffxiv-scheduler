@@ -62,7 +62,7 @@
 
         {{-- サブジョブ (Alliance Special only) --}}
         <div class="card p-5 mb-4" x-show="partyType === 'alliance_special'" x-cloak>
-            <h2 class="font-bold text-amber-300 mb-3">④ サブジョブ選択設定（アライアンス特殊パーティのみ）</h2>
+            <h2 class="font-bold text-amber-300 mb-3">④ サポートジョブ選択設定（クレセントアイルのみ）</h2>
             <label class="block mb-1">サブジョブの選択方式</label>
             <select name="sub_job_mode" class="form-select">
                 <option value="none" {{ old('sub_job_mode','none') === 'none' ? 'selected':'' }}>指定なし</option>
