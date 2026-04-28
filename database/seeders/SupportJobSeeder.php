@@ -10,7 +10,7 @@ class SupportJobSeeder extends Seeder
     public function run(): void
     {
         $jobs = [
-            ['name' => '見習い兵',   'name_en' => 'Freelancer',    'sort_order' => 1],
+            ['name' => 'すっぴん',   'name_en' => 'Freelancer',    'sort_order' => 1],
             ['name' => 'ナイト',     'name_en' => 'Knight',        'sort_order' => 2],
             ['name' => 'モンク',     'name_en' => 'Monk',          'sort_order' => 3],
             ['name' => 'バード',     'name_en' => 'Bard',          'sort_order' => 4],
