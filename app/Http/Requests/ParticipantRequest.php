@@ -29,19 +29,19 @@ class ParticipantRequest extends FormRequest
 
         if ($event && $event->job_mode !== JobMode::None) {
             if ($event->job_mode === JobMode::Single) {
-                $rules['selected_jobs'] = ['nullable', 'integer', 'exists:ff14_jobs,id'];
+                $rules['selected_jobs'] = ['nullable', 'integer', 'exists:support_jobs,id'];
             } else {
                 $rules['selected_jobs'] = ['nullable', 'array'];
-                $rules['selected_jobs.*'] = ['integer', 'exists:ff14_jobs,id'];
+                $rules['selected_jobs.*'] = ['integer', 'exists:support_jobs,id'];
             }
         }
 
         if ($event && $event->sub_job_mode !== JobMode::None) {
             if ($event->sub_job_mode === JobMode::Single) {
-                $rules['selected_sub_jobs'] = ['nullable', 'integer', 'exists:ff14_jobs,id'];
+                $rules['selected_sub_jobs'] = ['nullable', 'integer', 'exists:support_jobs,id'];
             } else {
                 $rules['selected_sub_jobs'] = ['nullable', 'array'];
-                $rules['selected_sub_jobs.*'] = ['integer', 'exists:ff14_jobs,id'];
+                $rules['selected_sub_jobs.*'] = ['integer', 'exists:support_jobs,id'];
             }
         }
 

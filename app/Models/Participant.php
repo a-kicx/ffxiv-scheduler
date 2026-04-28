@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use App\Models\SupportJob;
 
 class Participant extends Model
 {
@@ -42,12 +43,12 @@ class Participant extends Model
         return Ff14Job::whereIn('id', $this->selected_jobs)->orderBy('sort_order')->get();
     }
 
-    public function resolvedSubJobs(): Collection
+    public function resolvedSupportJobs(): Collection
     {
         if (empty($this->selected_sub_jobs)) {
             return collect();
         }
-        return Ff14Job::whereIn('id', $this->selected_sub_jobs)->orderBy('sort_order')->get();
+        return SupportJob::whereIn('id', $this->selected_sub_jobs)->orderBy('sort_order')->get();
     }
 
     public static function generateToken(): string

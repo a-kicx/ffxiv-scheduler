@@ -7,6 +7,7 @@ use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\Ff14Job;
 use App\Models\Slot;
+use App\Models\SupportJob;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -56,7 +57,9 @@ class EventController extends Controller
             $myParticipant = $event->participants->firstWhere('participant_token', $myToken);
         }
 
-        return view('events.show', compact('event', 'jobsByRole', 'myParticipant'));
+        $supportJobs = SupportJob::orderBy('sort_order')->get();
+
+        return view('events.show', compact('event', 'jobsByRole', 'myParticipant', 'supportJobs'));
     }
 
     public static function syncSlots(Event $event, array $validated): void

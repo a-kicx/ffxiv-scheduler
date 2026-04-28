@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\Ff14Job;
 use App\Models\Participant;
 use App\Models\Response;
+use App\Models\SupportJob;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\View\View;
@@ -81,8 +82,9 @@ class ParticipantController extends Controller
 
         $event->load('slots');
         $jobsByRole = Ff14Job::groupedByRole();
+        $supportJobs = SupportJob::orderBy('sort_order')->get();
 
-        return view('participants.edit', compact('event', 'participant', 'jobsByRole'));
+        return view('participants.edit', compact('event', 'participant', 'jobsByRole', 'supportJobs'));
     }
 
     public function update(ParticipantRequest $request, Event $event): RedirectResponse

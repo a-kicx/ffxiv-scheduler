@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Ff14Job;
 use App\Models\Participant;
 use App\Models\Response;
+use App\Models\SupportJob;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -20,8 +21,9 @@ class AdminController extends Controller
 
         $event->load(['slots', 'participants.responses']);
         $jobsByRole = Ff14Job::groupedByRole();
+        $supportJobs = SupportJob::orderBy('sort_order')->get();
 
-        return view('admin.show', compact('event', 'adminToken', 'jobsByRole'));
+        return view('admin.show', compact('event', 'adminToken', 'jobsByRole', 'supportJobs'));
     }
 
     public function edit(Event $event, string $adminToken): View|RedirectResponse
@@ -32,8 +34,9 @@ class AdminController extends Controller
 
         $event->load('slots');
         $jobsByRole = Ff14Job::groupedByRole();
+        $supportJobs = SupportJob::orderBy('sort_order')->get();
 
-        return view('admin.edit', compact('event', 'adminToken', 'jobsByRole'));
+        return view('admin.edit', compact('event', 'adminToken', 'jobsByRole', 'supportJobs'));
     }
 
     public function update(EventRequest $request, Event $event, string $adminToken): RedirectResponse

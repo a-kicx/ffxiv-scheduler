@@ -1,11 +1,10 @@
 @php
     $slots = $event->slots;
-    $isBinary = $event->attendance_mode->value === 'binary';
     $attendanceOptions = $event->attendance_mode->options();
     $showJobs = $event->job_mode->value !== 'none';
-    $showSubJobs = $event->sub_job_mode->value !== 'none';
+    $showSupportJobs = $event->sub_job_mode->value !== 'none';
     $isMultiJob = $event->job_mode->value === 'multiple';
-    $isMultiSubJob = $event->sub_job_mode->value === 'multiple';
+    $isMultiSupportJob = $event->sub_job_mode->value === 'multiple';
 @endphp
 
 <h3 class="font-bold text-amber-300 mb-4">
@@ -25,14 +24,14 @@
                value="{{ old('name', $participant?->name ?? '') }}" required placeholder="キャラ名など">
     </div>
 
-    {{-- Jobs --}}
+    {{-- Main Jobs --}}
     @if($showJobs)
     <div class="mb-4">
         <label class="block mb-2">参加ジョブ
             <span class="text-gray-500 text-xs ml-1">({{ $isMultiJob ? '複数選択可' : '1つ選択' }})</span>
         </label>
         <div class="flex flex-wrap gap-1">
-            @foreach(['tank' => 'タンク', 'healer' => 'ヒーラー', 'melee' => '近接DPS', 'pranged' => '遠隔物理', 'mranged' => '遠隔魔法'] as $role => $roleLabel)
+            @foreach(['tank' => 'タンク', 'healer' => 'ヒーラー', 'melee' => '近接DPS', 'pranged' => '遠隔物理DPS', 'mranged' => '遠隔魔法DPS'] as $role => $roleLabel)
                 @if(isset($jobsByRole[$role]) && count($jobsByRole[$role]) > 0)
                     <div class="mb-2 w-full">
                         <span class="text-xs text-gray-500">{{ $roleLabel }}</span>
@@ -60,34 +59,26 @@
     </div>
     @endif
 
-    {{-- Sub Jobs --}}
-    @if($showSubJobs)
+    {{-- Support Jobs (クレセントアイル専用) --}}
+    @if($showSupportJobs)
     <div class="mb-4">
-        <label class="block mb-2">サブジョブ
-            <span class="text-gray-500 text-xs ml-1">({{ $isMultiSubJob ? '複数選択可' : '1つ選択' }})</span>
+        <label class="block mb-2">サポートジョブ
+            <span class="text-gray-500 text-xs ml-1">クレセントアイル ({{ $isMultiSupportJob ? '複数選択可' : '1つ選択' }})</span>
         </label>
         <div class="flex flex-wrap gap-1">
-            @foreach(['tank' => 'タンク', 'healer' => 'ヒーラー', 'melee' => '近接DPS', 'pranged' => '遠隔物理', 'mranged' => '遠隔魔法'] as $role => $roleLabel)
-                @if(isset($jobsByRole[$role]) && count($jobsByRole[$role]) > 0)
-                    <div class="mb-2 w-full">
-                        <span class="text-xs text-gray-500">{{ $roleLabel }}</span>
-                        <div class="flex flex-wrap gap-1 mt-1">
-                            @foreach($jobsByRole[$role] as $job)
-                                @php
-                                    $checked = collect($participant?->selected_sub_jobs ?? [])->contains($job->id);
-                                    $inputName = $isMultiSubJob ? 'selected_sub_jobs[]' : 'selected_sub_jobs';
-                                    $inputType = $isMultiSubJob ? 'checkbox' : 'radio';
-                                @endphp
-                                <label class="flex items-center gap-1 cursor-pointer px-2 py-1 rounded border border-gray-700 hover:border-blue-500 transition-colors text-sm">
-                                    <input type="{{ $inputType }}" name="{{ $inputName }}" value="{{ $job->id }}"
-                                           {{ $checked ? 'checked' : '' }} class="hidden">
-                                    <span class="job-pill {{ $job->role->colorClass() }}">{{ $job->abbreviation }}</span>
-                                    <span>{{ $job->name }}</span>
-                                </label>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
+            @foreach($supportJobs as $job)
+                @php
+                    $checked = collect($participant?->selected_sub_jobs ?? [])->contains($job->id);
+                    $inputName = $isMultiSupportJob ? 'selected_sub_jobs[]' : 'selected_sub_jobs';
+                    $inputType = $isMultiSupportJob ? 'checkbox' : 'radio';
+                @endphp
+                <label class="flex items-center gap-1 cursor-pointer px-2 py-1 rounded border border-gray-700 hover:border-blue-400 transition-colors text-sm"
+                       :class="isSupportJobSelected({{ $job->id }}) ? 'border-blue-400 bg-gray-800' : ''">
+                    <input type="{{ $inputType }}" name="{{ $inputName }}" value="{{ $job->id }}"
+                           x-model="{{ $isMultiSupportJob ? 'selectedSupportJobs' : 'selectedSupportJob' }}"
+                           {{ $checked ? 'checked' : '' }} class="hidden">
+                    <span>{{ $job->name }}</span>
+                </label>
             @endforeach
         </div>
     </div>
@@ -162,9 +153,15 @@ function participantForm() {
     return {
         selectedJobs: @json(old('selected_jobs', $participant?->selected_jobs ?? [])),
         selectedJob: @json(old('selected_jobs', $participant?->selected_jobs ? ($participant->selected_jobs[0] ?? null) : null)),
+        selectedSupportJobs: @json(old('selected_sub_jobs', $participant?->selected_sub_jobs ?? [])),
+        selectedSupportJob: @json(old('selected_sub_jobs', $participant?->selected_sub_jobs ? ($participant->selected_sub_jobs[0] ?? null) : null)),
         isJobSelected(id) {
-            if (Array.isArray(this.selectedJobs)) return this.selectedJobs.includes(id) || this.selectedJobs.map(Number).includes(id);
+            if (Array.isArray(this.selectedJobs)) return this.selectedJobs.map(Number).includes(id);
             return Number(this.selectedJob) === id;
+        },
+        isSupportJobSelected(id) {
+            if (Array.isArray(this.selectedSupportJobs)) return this.selectedSupportJobs.map(Number).includes(id);
+            return Number(this.selectedSupportJob) === id;
         }
     };
 }

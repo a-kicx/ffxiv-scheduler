@@ -58,11 +58,11 @@
                             @endforeach
                         </div>
                     @endif
-                    @php $subJobs = $participant->resolvedSubJobs(); @endphp
-                    @if($subJobs->isNotEmpty())
+                    @php $supportJobs = $participant->resolvedSupportJobs(); @endphp
+                    @if($supportJobs->isNotEmpty())
                         <div class="mt-0.5 flex flex-wrap gap-0.5">
-                            @foreach($subJobs as $job)
-                                <span class="job-pill bg-gray-700 text-gray-200">{{ $job->abbreviation }}</span>
+                            @foreach($supportJobs as $job)
+                                <span class="job-pill bg-blue-900 text-blue-200">{{ $job->name }}</span>
                             @endforeach
                         </div>
                     @endif
