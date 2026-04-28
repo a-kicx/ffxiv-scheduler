@@ -29,10 +29,10 @@ class ParticipantRequest extends FormRequest
 
         if ($event && $event->job_mode !== JobMode::None) {
             if ($event->job_mode === JobMode::Single) {
-                $rules['selected_jobs'] = ['nullable', 'integer', 'exists:support_jobs,id'];
+                $rules['selected_jobs'] = ['nullable', 'integer', 'exists:ff14_jobs,id'];
             } else {
                 $rules['selected_jobs'] = ['nullable', 'array'];
-                $rules['selected_jobs.*'] = ['integer', 'exists:support_jobs,id'];
+                $rules['selected_jobs.*'] = ['integer', 'exists:ff14_jobs,id'];
             }
         }
 
