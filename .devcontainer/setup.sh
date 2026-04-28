@@ -14,6 +14,13 @@ if [ ! -f .env ]; then
     php artisan key:generate
 fi
 
+# Codespaces: APP_URL を自動設定
+if [ -n "$CODESPACE_NAME" ] && [ -n "$GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN" ]; then
+    APP_URL="https://${CODESPACE_NAME}-8000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
+    sed -i "s|APP_URL=.*|APP_URL=${APP_URL}|" .env
+    echo "APP_URL を Codespaces URL に設定: ${APP_URL}"
+fi
+
 # SQLite DB
 touch database/database.sqlite
 
