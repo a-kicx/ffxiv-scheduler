@@ -78,11 +78,11 @@
             <div class="flex flex-wrap gap-4 mb-3">
                 <div>
                     <label class="block mb-1">開始日</label>
-                    <input type="date" name="date_from" class="form-input" value="{{ old('date_from') }}" required>
+                    <input type="date" name="date_from" class="form-input" value="{{ old('date_from', today()->toDateString()) }}" required>
                 </div>
                 <div>
                     <label class="block mb-1">終了日</label>
-                    <input type="date" name="date_to" class="form-input" value="{{ old('date_to') }}" required>
+                    <input type="date" name="date_to" class="form-input" value="{{ old('date_to', today()->toDateString()) }}" required>
                 </div>
             </div>
 
