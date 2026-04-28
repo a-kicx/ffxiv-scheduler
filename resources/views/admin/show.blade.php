@@ -108,9 +108,9 @@
             @foreach($event->role_config['units'] as $unit)
             <div class="bg-ff-card rounded p-2 text-sm">
                 <span class="font-bold text-ff-gold">{{ $unit['label'] }}</span>
-                <span class="ml-2 job-pill role-tank">TK×{{ $unit['tank'] }}</span>
-                <span class="job-pill role-healer">HL×{{ $unit['healer'] }}</span>
-                <span class="job-pill role-melee">DPS×{{ $unit['dps'] }}</span>
+                <span class="ml-2 job-pill role-tank">{{ config('const.JOB_ROLE.TANK') }}×{{ $unit['tank'] }}</span>
+                <span class="job-pill role-healer">{{ config('const.JOB_ROLE.HEALER') }}×{{ $unit['healer'] }}</span>
+                <span class="job-pill role-melee">{{ config('const.JOB_ROLE.DPS') }}×{{ $unit['dps'] }}</span>
             </div>
             @endforeach
         </div>

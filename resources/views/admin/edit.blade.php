@@ -38,15 +38,16 @@
                     <div class="flex flex-wrap gap-3 items-center mb-2 p-2 bg-ff-card rounded">
                         <span class="text-ff-gold text-sm font-bold w-28" x-text="unit.label"></span>
                         <label class="flex items-center gap-1 text-sm">
-                            <span class="job-pill role-tank">TK</span>
+                            <span class="job-pill role-tank">{{ config('const.JOB_ROLE.TANK') }}</span>
                             <input type="number" :name="`role_config[units][${idx}][tank]`" x-model.number="unit.tank" class="form-input w-14 text-center" min="0" max="8">
                         </label>
                         <label class="flex items-center gap-1 text-sm">
-                            <span class="job-pill role-healer">HL</span>
+                            <span class="job-pill role-healer">{{ config('const.JOB_ROLE.HEALER') }}</span>
                             <input type="number" :name="`role_config[units][${idx}][healer]`" x-model.number="unit.healer" class="form-input w-14 text-center" min="0" max="8">
                         </label>
                         <label class="flex items-center gap-1 text-sm">
-                            <span class="job-pill role-melee">DPS</span>
+                            <span class="job-pill role-melee">{{ config('const.JOB_ROLE.DPS') }}
+                            </span>
                             <input type="number" :name="`role_config[units][${idx}][dps]`" x-model.number="unit.dps" class="form-input w-14 text-center" min="0" max="8">
                         </label>
                         <input type="hidden" :name="`role_config[units][${idx}][label]`" :value="unit.label">
