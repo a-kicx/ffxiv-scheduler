@@ -11,6 +11,7 @@
             'event' => $event,
             'participant' => $participant,
             'jobsByRole' => $jobsByRole,
+            'supportJobs' => $supportJobs,
             'isEdit' => true,
         ])
     </div>
