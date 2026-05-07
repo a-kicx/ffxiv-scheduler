@@ -34,9 +34,10 @@ jobs:
 
       - name: Patch index.php with production Laravel root path
         env:
-          LARAVEL_ROOT: ${{ secrets.LARAVEL_ROOT }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          APP_DIR: ${{ secrets.FTP_APP_DIR }}
         run: |
-          ROOT="${LARAVEL_ROOT%/}"
+          ROOT="/home/${FTP_USERNAME}/${APP_DIR%/}"
           sed -i "s|__DIR__\.'/..'|'${ROOT}'|g" public/index.php
 
       - name: Deploy Laravel app (excluding public/)
