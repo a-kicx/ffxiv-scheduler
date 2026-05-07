@@ -1,0 +1,33 @@
+name: Deploy to Star Server
+
+on:
+  push:
+    branches:
+      - main # mainブランチにpushされた時に実行
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build # ここでoutまたはdistフォルダが生成される
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/ # ビルドされたフォルダを指定（Next.jsならout）
+          server-dir: /your-domain.com/public_html/ # サーバー側のパス
