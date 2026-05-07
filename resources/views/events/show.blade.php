@@ -21,9 +21,9 @@
     {{-- Join/Edit Form --}}
     <div x-show="showJoinForm" x-cloak class="card p-5 mb-6">
         @if($myParticipant)
-            @include('participants._form', ['event' => $event, 'participant' => $myParticipant, 'jobsByRole' => $jobsByRole, 'isEdit' => true])
+            @include('participants._form', ['event' => $event, 'participant' => $myParticipant, 'jobsByRole' => $jobsByRole, 'supportJobs' => $supportJobs, 'isEdit' => true])
         @else
-            @include('participants._form', ['event' => $event, 'participant' => null, 'jobsByRole' => $jobsByRole, 'isEdit' => false])
+            @include('participants._form', ['event' => $event, 'participant' => null, 'jobsByRole' => $jobsByRole, 'supportJobs' => $supportJobs, 'isEdit' => false])
         @endif
     </div>
 
