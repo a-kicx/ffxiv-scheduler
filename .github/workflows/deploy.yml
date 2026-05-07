@@ -3,7 +3,7 @@ name: Deploy to Star Server
 on:
   push:
     branches:
-      - main # mainブランチにpushされた時に実行
+      - main
 
 jobs:
   deploy:
@@ -12,22 +12,56 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: sqlite3, xml, mbstring, curl
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-      - name: Build project
-        run: npm run build # ここでoutまたはdistフォルダが生成される
+      - name: Install Node dependencies & build assets
+        run: |
+          npm ci
+          npm run build
 
-      - name: FTP Deploy
+      - name: Patch index.php with production Laravel root path
+        env:
+          APP_DIR: ${{ secrets.FTP_APP_DIR }}
+        run: |
+          ROOT="${APP_DIR%/}"
+          sed -i "s|__DIR__\.'/..'|'${ROOT}'|g" public/index.php
+
+      - name: Deploy Laravel app (excluding public/)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/ # ビルドされたフォルダを指定（Next.jsならout）
-          server-dir: /your-domain.com/public_html/ # サーバー側のパス
+          local-dir: ./
+          server-dir: ${{ secrets.FTP_APP_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/tests/**
+            **/.env
+            **/storage/logs/**
+            **/storage/framework/cache/**
+            **/public/**
+
+      - name: Deploy public/ to web root
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./public/
+          server-dir: ${{ secrets.FTP_PUBLIC_DIR }}
