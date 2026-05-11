@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+# SSH key restore from Codespaces secret
+if [ -n "$SSH_PRIVATE_KEY" ]; then
+    mkdir -p ~/.ssh
+    echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519_oddeye
+    chmod 600 ~/.ssh/id_ed25519_oddeye
+fi
+
 # Install PHP extensions
 sudo apt-get update -qq
 sudo apt-get install -y -qq php8.4-sqlite3 php8.4-xml php8.4-mbstring php8.4-curl 2>/dev/null || true
