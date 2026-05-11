@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,21 +34,14 @@ jobs:
           npm ci
           npm run build
 
-      - name: Patch index.php with production Laravel root path
-        env:
-          APP_DIR: ${{ secrets.FTP_APP_DIR }}
-        run: |
-          ROOT="${APP_DIR%/}"
-          sed -i "s|__DIR__\.'/..'|'${ROOT}'|g" public/index.php
-
-      - name: Deploy Laravel app (excluding public/)
+      - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: ${{ secrets.FTP_APP_DIR }}
+          server-dir: /
           exclude: |
             **/.git*
             **/.git*/**
@@ -55,13 +50,3 @@ jobs:
             **/.env
             **/storage/logs/**
             **/storage/framework/cache/**
-            **/public/**
-
-      - name: Deploy public/ to web root
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./public/
-          server-dir: ${{ secrets.FTP_PUBLIC_DIR }}
